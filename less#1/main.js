@@ -7,4 +7,4 @@ let period;
 
 alert('Привет, JavaScript');
 
-console.log('Very interesting JS');
+console.log("Very interesting JS");
