@@ -17,8 +17,8 @@ console.log(addExpenses.length + ' длина строки');
 console.log('Период равен' + ' ' + period + ' ' + 'месяцев');
 console.log('Цель заработать ' + mission + ' долларов');
 // 4-e задание
-console.log(addExpenses.toLowerCase());
-console.log(addExpenses.split(', '));
+console.log(addExpenses.toLowerCase().split(', ')); //добавлен split в одну строку 
+
 // 5-е задание
 let budgetDay = (money / 30);
 console.log(Math.round(budgetDay) + ' ' + 'в день');
@@ -48,7 +48,7 @@ let amount2 = +prompt('Во сколько это обойдется?');
 // console.log(amount2);
 
 //задание 5
-let budgetMonth = (money - (amount1 + amount2));
+let budgetMonth = money - (amount1 + amount2); // удалены внешние скобки
 console.log('Бюджет на месяць ' + budgetMonth);
 
 //задание 6
