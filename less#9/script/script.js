@@ -7,7 +7,7 @@ let isText = function (str) {
   return !(str === null || null === "" || isNumber(str));
 };
 
-let calculate = document.getElementById('#start');
+let calculate = document.getElementById('start');
 
 let incomeAddButton = document.getElementsByTagName('button')[0];
 let expensesAddButton = document.getElementsByName('button')[1];
