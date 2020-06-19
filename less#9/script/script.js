@@ -22,6 +22,13 @@ let periodInput = document.querySelector('.period-select');
 
 let additionalIncomeValue = document.querySelector('.additional_income-value');
 let additionalExpensesValue = document.querySelector('.additional_expenses-value');
+let salaryAmountValue = document.querySelector('.salary-amount');
+let incomeTitleValue = document.querySelector('.income-title');
+let incomeAmountValue = document.querySelector('.income-amount');
+let expensesTitleValue = document.querySelector('.expenses-title');
+let expensesAmountValue = document.querySelector('.expenses-amount');
+let targetAmountValue = document.querySelector('.target-amount');
+
 
 
 let money,
