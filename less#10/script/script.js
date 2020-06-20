@@ -27,13 +27,23 @@ titleLink[2].textContent = 'Книга 3. this и Прототипы Объек�
 advertising.remove();
 
 //Восстановить порядок глав во второй и пятой книге (внимательно инспектируйте индексы элементов, поможет dev tools)
+listContent[9].after(listContent[12]);
+listContent[16].before(listContent[8]);
+listContent[10].before(listContent[13]);
 
+listContent[37].after(listContent[45]);
+listContent[43].before(listContent[39]);
+listContent[44].after(listContent[41]);
 
 //в шестой книге добавить главу “Глава 8: За пределами ES6” и поставить её в правильное место
-console.log(listContent);
-listContent.createElement.add('li');
-// listContent[57].textContent = 'Глава 8: За пределами ES6';
+// console.log(listContent);
 
-console.log(books);
-console.log(titleBook);
-console.log(advertising);
+const dopElement = document.createElement('li');
+dopElement.textContent = 'Глава 8: За пределами ES6 ';
+listContent[55].append(dopElement);
+
+
+// console.log(dopElement);
+// console.log(books);
+// console.log(titleBook);
+// console.log(advertising);
