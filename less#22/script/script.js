@@ -53,6 +53,7 @@ class ToDo {
         key: this.generateKey(),
       };
       this.todoData.set(newTodo.key, newTodo);
+      this.input.value = '';
       this.render();
     }
 
