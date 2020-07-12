@@ -364,7 +364,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const countSum = () => {
       let total = 0,
-        calcValue = 1,
+        countValue = 1,
         dayValue = 1;
 
 
@@ -373,7 +373,7 @@ window.addEventListener('DOMContentLoaded', () => {
       // console.log(!!typeValue);
       // console.log(!!squeValue);
       if (calcCount.value > 1) {
-        calcValue += (calcCount.value - 1) / 10;
+        countValue += (calcCount.value - 1) / 10;
       }
 
 
@@ -384,7 +384,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       if (typeValue && squeValue) {
-        total = price * typeValue * squeValue * calcValue;
+        total = price * typeValue * squeValue * countValue * dayValue;
       }
 
       totalValue.textContent = total;
