@@ -375,14 +375,11 @@ window.addEventListener('DOMContentLoaded', () => {
       if (calcCount.value > 1) {
         countValue += (calcCount.value - 1) / 10;
       }
-
-
       if (calcDay.value && calcDay.value < 5) {
         dayValue *= 2;
       } else if (calcDay.value && calcDay.value < 10) {
         dayValue *= 1.5;
       }
-
       if (typeValue && squeValue) {
         total = price * typeValue * squeValue * countValue * dayValue;
       }
@@ -408,14 +405,8 @@ window.addEventListener('DOMContentLoaded', () => {
       if (target.matches('select') || target.matches('unput')) {
         //   console.log(3);
       }
-      countSum()
-
-
+      countSum();
     });
-
-
-
-
   };
 
   calc(100);
@@ -440,7 +431,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const formData = new FormData(form);
       let body = {};
       //первый вариант вывода body
-      for (let val of formData.enteries()) {
+      for (let val of formData.entries()) {
         // console.log(val);
         body[val[0]] = val[1];
       }
@@ -459,7 +450,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     const postData = (body, outputData, errorData) => {
-      const request = XMLHttpRequest();
+      const request = new XMLHttpRequest();
 
       request.addEventListener('readystatechange', () => {
 
@@ -475,13 +466,62 @@ window.addEventListener('DOMContentLoaded', () => {
         };
       });
 
-      request.open('POST', '.server.php');
+      request.open('POST', 'server.php');
       request.setRequestHeader('Content-Type', 'application/json');
 
       request.send(JSON.stringify(body));
     };
   };
   sendForm();
+
+  // validation form
+
+  const formPhone = document.querySelectorAll('.form-phone'),// поля с вводом
+    formBlock = document.getElementById('form1'); // весь блок
+
+
+  formPhone.addEventListener('input', () => {
+
+    formBlock.forEach((item) => {
+
+      item.value = item.value.replace(/[0-9]/g, ''); // (/\D[.]/g, '')
+    });
+  });
+  formPhone();
+  // };
+
+  // const validePhone = (form) => {
+  //   if (form.querySelector('.form-phone')) {
+  //     form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^[^+\d]*(\+|\d)|\D/g, '$1'));
+  //   }
+  //   // if (form.querySelector('.form-name')) {
+  //   //   form.querySelector('.form-name').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
+  //   // } // отключает поле вводна имени 
+  //   if (form.querySelector('.form-message')) {
+  //     form.querySelector('.form-message').addEventListener('input', e => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
+  //   }
+  // };
+  // validePhone(form1);
+  // validePhone(form2);
+  // validePhone(form3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
