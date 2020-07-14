@@ -476,14 +476,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // validation form
   //валидация по телефону
-  const formsItem = (form1, form2, form3) => {
+  const formsItem = () => {
+
+    // const formsItem = (form) => {
 
     const formPhone = document.querySelectorAll('.form-phone'),// поля с вводом
-      formBlock = document.getElementById('form1'); // весь блок
+      formBlock = document.getElementById('form1');// весь блок
 
     formPhone.forEach(item => {
       item.addEventListener('input', () => {
-        item.value = item.value.replace(/\+\(\d{3}\) \d{3}\-\d{4}/g, ''); //(/[^[^+\d]*(\+|\d)|\D/g, '');   //(/\D/g, '');
+        item.value = item.value.replace(/[^[^+\d]*(\+|\d)|\D/g, '$1');
+
+        //варианты маски к телефону
+        // (/^[^+\d]*(+|\d)|\D$/ig, '');
+        //(/[^[^+\d]*(\+|\d)|\D/g, '$1'); //(/\+\(\d{3}\) \d{3}\-\d{4}/g, ''); //(/[^[^+\d]*(\+|\d)|\D/g, '');   (/\D/g, '');
       });
     });
 
@@ -504,7 +510,28 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
   };
+
+  //Очистка инпута
+  document.querySelectorAll('.form-btn')
+    .forEach(function (elem) {
+      elem.onclick = function (e) {
+
+        let selector = this.dataset.clearSelector;
+        document.querySelectorAll(selector)
+          .forEach(function (item) {
+            item.value = '';
+          });
+      };
+    });
+
+
+
   formsItem();
+  // formBlock1(form1);
+  // formBlock2(form2);
+  // formBlock3(form3);
+
+
 
   // const validePhone = (form) => {
   //   if (form.querySelector('.form-phone')) {
