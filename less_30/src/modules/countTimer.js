@@ -1,18 +1,24 @@
-let timerHours = document.getElementById('timer-hours'),
-  timerMinutes = document.getElementById('timer-minutes'),
-  timerSeconds = document.getElementById('timer-seconds');
 function countTimer(deadline) {
 
-  function getTimeRemaining() {
+  let timerHours = document.getElementById('timer-hours'),
+    timerMinutes = document.getElementById('timer-minutes'),
+    timerSeconds = document.getElementById('timer-seconds');
 
+
+  function getTimeRemaining() {
     let dateStop = new Date(deadline).getTime(),
       dateNow = new Date().getTime(),
       timeRemaining = (dateStop - dateNow) / 1000,
       seconds = Math.floor(timeRemaining % 60),
       minutes = Math.floor((timeRemaining / 60) % 60),
-      hours = Math.floor(timeRemaining / 60 / 60);
+      hours = Math.floor(timeRemaining / 60 / 60); //% 24 если необходимо количество дней!
+    //day = Math.floor(timeRemaining / 60 / 60 / 24);
 
-
+    if (timeRemaining <= 0) {
+      seconds = 0;
+      minutes = 0;
+      hours = 0;
+    }
     return {
       timeRemaining,
       hours,
@@ -21,45 +27,20 @@ function countTimer(deadline) {
     };
   }
 
-
-  function updateClock() {
-
+  function update() {
     let timer = getTimeRemaining();
-
-
-
-    if (timer.hours < 10) {
-      timerHours.textContent = "0" + timer.hours;
-    } else {
-      timerHours.textContent = timer.hours;
-    }
-
-    if (timer.minutes < 10) {
-      timerMinutes.textContent = "0" + timer.minutes;
-    } else {
-      timerMinutes.textContent = timer.minutes;
-    }
-
-    if (timer.seconds < 10) {
-      timerSeconds.textContent = "0" + timer.seconds;
-    } else {
-      timerSeconds.textContent = timer.seconds;
-    }
-
-    let newInterval = setInterval(updateClock, 1000);
-
-    if (timer.timeRemaining > 0) {
-      setTimeout(updateClock, 1000);
-    }
-    else {
-      clearInterval(newInterval);
-      timerHours.textContent = '00';
-      timerMinutes.textContent = '00';
-      timerSeconds.textContent = '00';
-    }
-
+    timerHours.textContent = (timer.hours < 10) ? `0${timer.hours}` : timer.hours;
+    timerMinutes.textContent = (timer.minutes < 10) ? `0${timer.minutes}` : timer.minutes;
+    timerSeconds.textContent = (timer.seconds < 10) ? `0${timer.seconds}` : timer.seconds;
+    return (timer > 0) ? true : false;
   }
-  updateClock();
-};
+
+  update();
+  if (update) {
+    let interval = setInterval(update, 1000);
+  } else {
+    clearInterval(interval);
+  }
+}
 
 export default countTimer;

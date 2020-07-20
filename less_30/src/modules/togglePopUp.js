@@ -32,7 +32,6 @@ const togglePopUp = () => {
       }
     });
   });
-
   popup.addEventListener('click', (event) => {
     let target = event.target;
     if (target.classList.contains('popup-close')) {
@@ -43,10 +42,7 @@ const togglePopUp = () => {
         popup.style.display = 'none';
       };
     }
-
   });
-
 };
-
 
 export default togglePopUp;

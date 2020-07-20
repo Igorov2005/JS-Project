@@ -23,4 +23,5 @@ const livePhotos = () => {
 
   });
 };
+
 export default livePhotos;
