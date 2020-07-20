@@ -422,10 +422,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = `font-size: 2rem;`;
-
+    //валидация клиента
     const validePhone = (form) => {
       if (form.querySelector('.form-phone')) {
         form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/(?<!^)\+|[^\d+]/g, ''));
+        form.querySelector('.form-phone').addEventListener('input', (e) => {
+          if (e.target.value.length < 5 || e.target.value.length > 20) form.querySelector('button').setAttribute("disabled", "disabled");
+          else form.querySelector('button').removeAttribute("disabled");
+        });
       }
       if (form.querySelector('.form-name')) {
         form.querySelector('.form-name').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
@@ -442,15 +446,27 @@ window.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       form1.appendChild(statusMessage);
       statusMessage.innerHTML = loadMessage;
+
       const formData = new FormData(form1);
+
       let body = {};
+
       formData.forEach((value, key) => body[key] = value);
       postData(body)
-        .then(() => statusMessage.innerHTML = successMessage)
-        .catch(error => { console.error(error); statusMessage.innerHTML = errorMessage; });
+        .then((response) => {
+          if (response.status !== 200) throw new Error('status network not 200');
+          statusMessage.innerHTML = successMessage;
+          setTimeout(() => statusMessage.innerHTML = '', 3000);
+        })
+        .catch(error => {
+          console.error(error);
+          statusMessage.innerHTML = errorMessage;
+          setTimeout(() => statusMessage.innerHTML = '', 3000);
+        });
 
       form1.querySelectorAll('input').forEach(item => item.value = '');
     });
+
     form2.addEventListener('submit', e => {
       e.preventDefault();
       form2.appendChild(statusMessage);
@@ -459,11 +475,20 @@ window.addEventListener('DOMContentLoaded', () => {
       let body = {};
       formData.forEach((value, key) => body[key] = value);
       postData(body)
-        .then(() => statusMessage.innerHTML = successMessage)
-        .catch(error => { console.error(error); statusMessage.innerHTML = errorMessage; });
+        .then((response) => {
+          if (response.status !== 200) throw new Error('status network not 200')
+          statusMessage.innerHTML = successMessage;
+          setTimeout(() => statusMessage.innerHTML = '', 3000);
+        })
+        .catch(error => {
+          console.error(error);
+          statusMessage.innerHTML = errorMessage;
+          setTimeout(() => statusMessage.innerHTML = '', 3000);
+        });
 
       form2.querySelectorAll('input').forEach(item => item.value = '');
     });
+
     form3.addEventListener('submit', e => {
       e.preventDefault();
       form3.appendChild(statusMessage);
@@ -474,59 +499,30 @@ window.addEventListener('DOMContentLoaded', () => {
       let body = {};
       formData.forEach((value, key) => body[key] = value);
       postData(body)
-        .then(() => statusMessage.innerHTML = successMessage)
+        .then((response) => {
+          if (response.status !== 200) throw new Error('status network not 200')
+          statusMessage.innerHTML = successMessage;
+          setTimeout(() => statusMessage.innerHTML = '', 3000);
+        })
         .catch(error => {
           console.error(error);
           statusMessage.innerHTML = errorMessage;
+          setTimeout(() => statusMessage.innerHTML = '', 3000);
         });
 
       form3.querySelectorAll('input').forEach(item => item.value = '');
     });
-
-    // let body = {};
-    // //первый вариант вывода body
-    // for (let val of formData.entries()) {
-    //   // console.log(val);
-    //   body[val[0]] = val[1];
-    // }
-    // statusMessage.textContent = loadMessage;
-    //второй вариант вывода body
-    // formData.forEach((val, key) => {
-    //   body[key] = val;
-    // });
-
-    // console.log(body);
-    postData(body)
-      .then((response) => {
-        if (response.status !== 200) {
-          throw new Error('status network not 200');
-        }
-        statusMessage.textContent = succesMessage;
-      })
-      .catch((error) => {
-        statusMessage.textContent = errorMesage;
+    //отправка данных на сервер
+    const postData = (body) => {
+      return fetch('./server.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
       });
-
-
-    // postData(body, () => {
-    //   statusMessage.textContent = succesMessage;
-    // }, (error) => {
-    //   statusMessage.textContent = errorMesage;
-    // });
-
-
-  });
-
-const postData = (body) => {
-
-  return fetch('./server.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  });
-
+    };
+  };
 
   // const request = new XMLHttpRequest();
 
@@ -547,83 +543,10 @@ const postData = (body) => {
   // request.open('POST', 'server.php');
   // request.setRequestHeader('Content-Type', 'application/json');
   // request.send(JSON.stringify(body));
-};
-  };
-sendForm();
-
-// validation form
-//валидация по телефону
-const formsItem = () => {
-
-  // const formsItem = (form) => {
-
-  const formPhone = document.querySelectorAll('.form-phone'),// поля с вводом
-    formBlock = document.getElementById('form1');// весь блок
-
-  formPhone.forEach(item => {
-    item.addEventListener('input', () => {
-      item.value = item.value.replace(/[^[^+\d]*(\+|\d)|\D/g, '$1');
-
-      //варианты маски к телефону
-      // (/^[^+\d]*(+|\d)|\D$/ig, '');
-      //(/[^[^+\d]*(\+|\d)|\D/g, '$1'); //(/\+\(\d{3}\) \d{3}\-\d{4}/g, ''); //(/[^[^+\d]*(\+|\d)|\D/g, '');   (/\D/g, '');
-    });
-  });
-
-
-  //валидация email 
-  const formEmail = document.querySelectorAll('.form-email');
-  formEmail.forEach(item => {
-    item.addEventListener('input', () => {
-      item.value = item.value.replace(/[+()]/g, '');
-    });
-  });
-
-  //валидация по имени
-  const formName = document.querySelectorAll('.form-name');
-  formName.forEach(item => {
-    item.addEventListener('input', () => {
-      item.value = item.value.replace(/[^а-яА-Я ]/g, '');
-    });
-  });
-};
-
-//Очистка инпута
-document.querySelectorAll('.form-btn')
-  .forEach(function (elem) {
-    elem.onclick = function (e) {
-
-      let selector = this.dataset.clearSelector;
-      document.querySelectorAll(selector)
-        .forEach(function (item) {
-          item.value = '';
-        });
-    };
-  });
-
-
-
-formsItem();
-  // formBlock1(form1);
-  // formBlock2(form2);
-  // formBlock3(form3);
-
-
-
-  // const validePhone = (form) => {
-  //   if (form.querySelector('.form-phone')) {
-  //     form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^[^+\d]*(\+|\d)|\D/g, '$1'));
-  //   }
-  //   if (form.querySelector('.form-name')) {
-  //     form.querySelector('.form-name').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
-  //   } // отключает поле вводна имени 
-  //   if (form.querySelector('.form-message')) {
-  //     form.querySelector('.form-message').addEventListener('input', e => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
-  //   }
   // };
-  // validePhone(form1);
-  // validePhone(form2);
-  // validePhone(form3);
+  // };
+  sendForm();
+
 
 
 
