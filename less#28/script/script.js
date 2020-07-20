@@ -472,7 +472,10 @@ window.addEventListener('DOMContentLoaded', () => {
       formData.forEach((value, key) => body[key] = value);
       postData(body)
         .then(() => statusMessage.innerHTML = successMessage)
-        .catch(error => { console.error(error); statusMessage.innerHTML = errorMessage; });
+        .catch(error => {
+          console.error(error);
+          statusMessage.innerHTML = errorMessage;
+        });
 
       form3.querySelectorAll('input').forEach(item => item.value = '');
     });
@@ -490,83 +493,10 @@ window.addEventListener('DOMContentLoaded', () => {
         request.send(JSON.stringify(body));
       });
 
-    }
-  }
+    };
+  };
   sendForm();
 
-  // validation form
-  //валидация по телефону
-  const formsItem = () => {
-
-    // const formsItem = (form) => {
-
-    const formPhone = document.querySelectorAll('.form-phone'),// поля с вводом
-      formBlock = document.getElementById('form1');// весь блок
-
-    formPhone.forEach(item => {
-      item.addEventListener('input', () => {
-        item.value = item.value.replace(/[^[^+\d]*(\+|\d)|\D/g, '$1');
-
-        //варианты маски к телефону
-        // (/^[^+\d]*(+|\d)|\D$/ig, '');
-        //(/[^[^+\d]*(\+|\d)|\D/g, '$1'); //(/\+\(\d{3}\) \d{3}\-\d{4}/g, ''); //(/[^[^+\d]*(\+|\d)|\D/g, '');   (/\D/g, '');
-      });
-    });
-
-
-    //валидация email 
-    const formEmail = document.querySelectorAll('.form-email');
-    formEmail.forEach(item => {
-      item.addEventListener('input', () => {
-        item.value = item.value.replace(/[+()]/g, '');
-      });
-    });
-
-    //валидация по имени
-    const formName = document.querySelectorAll('.form-name');
-    formName.forEach(item => {
-      item.addEventListener('input', () => {
-        item.value = item.value.replace(/[^а-яА-Я ]/g, '');
-      });
-    });
-  };
-
-  //Очистка инпута
-  document.querySelectorAll('.form-btn')
-    .forEach(function (elem) {
-      elem.onclick = function (e) {
-
-        let selector = this.dataset.clearSelector;
-        document.querySelectorAll(selector)
-          .forEach(function (item) {
-            item.value = '';
-          });
-      };
-    });
-
-
-
-  formsItem();
-  // formBlock1(form1);
-  // formBlock2(form2);
-  // formBlock3(form3);
-
-
-
-  // const validePhone = (form) => {
-  //   if (form.querySelector('.form-phone')) {
-  //     form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^[^+\d]*(\+|\d)|\D/g, '$1'));
-  //   }
-  //   if (form.querySelector('.form-name')) {
-  //     form.querySelector('.form-name').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
-  //   } // отключает поле вводна имени 
-  //   if (form.querySelector('.form-message')) {
-  //     form.querySelector('.form-message').addEventListener('input', e => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
-  //   }
-  // };
-  // validePhone(form1);
-  // validePhone(form2);
-  // validePhone(form3);
 
 
 
