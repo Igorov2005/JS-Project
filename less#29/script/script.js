@@ -413,28 +413,75 @@ window.addEventListener('DOMContentLoaded', () => {
 
   //send -ajax-form
   const sendForm = () => {
-
-    const errorMesage = 'Что то пошло не так.....',
-      loadMessage = 'Загрузка ....',
-      succesMessage = 'Спасибо! Мы скоро с Вами свяжемся!';
-
-    const form = document.getElementById('form1');
+    const errorMessage = 'Что-то пошло не так...',
+      loadMessage = `<div class="sk-rotating-plane"></div>`,
+      successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
+    const form1 = document.getElementById('form1'),
+      form2 = document.getElementById('form2'),
+      form3 = document.getElementById('form3');
 
     const statusMessage = document.createElement('div');
-    statusMessage.textContent = 'Тут будет сообщение';
-    statusMessage.style.css = 'font-size: 2rem';
+    statusMessage.style.cssText = `font-size: 2rem;`;
 
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      form.appendChild(statusMessage);
+    const validePhone = (form) => {
+      if (form.querySelector('.form-phone')) {
+        form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/(?<!^)\+|[^\d+]/g, ''));
+      }
+      if (form.querySelector('.form-name')) {
+        form.querySelector('.form-name').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
+      }
+      if (form.querySelector('.form-message')) {
+        form.querySelector('.form-message').addEventListener('input', e => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
+      }
+    };
+    validePhone(form1);
+    validePhone(form2);
+    validePhone(form3);
 
-      const formData = new FormData(form);
-      .then((FormData) => {
-        if (body[key] = val) {
-          statusMessage.textContent = loadMessage;
-        }
-      })
+    form1.addEventListener('submit', e => {
+      e.preventDefault();
+      form1.appendChild(statusMessage);
+      statusMessage.innerHTML = loadMessage;
+      const formData = new FormData(form1);
+      let body = {};
+      formData.forEach((value, key) => body[key] = value);
+      postData(body)
+        .then(() => statusMessage.innerHTML = successMessage)
+        .catch(error => { console.error(error); statusMessage.innerHTML = errorMessage; });
 
+      form1.querySelectorAll('input').forEach(item => item.value = '');
+    });
+    form2.addEventListener('submit', e => {
+      e.preventDefault();
+      form2.appendChild(statusMessage);
+      statusMessage.innerHTML = loadMessage;
+      const formData = new FormData(form2);
+      let body = {};
+      formData.forEach((value, key) => body[key] = value);
+      postData(body)
+        .then(() => statusMessage.innerHTML = successMessage)
+        .catch(error => { console.error(error); statusMessage.innerHTML = errorMessage; });
+
+      form2.querySelectorAll('input').forEach(item => item.value = '');
+    });
+    form3.addEventListener('submit', e => {
+      e.preventDefault();
+      form3.appendChild(statusMessage);
+      statusMessage.style.color = '#fff';
+      statusMessage.innerHTML = loadMessage;
+
+      const formData = new FormData(form3);
+      let body = {};
+      formData.forEach((value, key) => body[key] = value);
+      postData(body)
+        .then(() => statusMessage.innerHTML = successMessage)
+        .catch(error => {
+          console.error(error);
+          statusMessage.innerHTML = errorMessage;
+        });
+
+      form3.querySelectorAll('input').forEach(item => item.value = '');
+    });
 
     // let body = {};
     // //первый вариант вывода body
